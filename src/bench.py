@@ -1,0 +1,79 @@
+"""Замер производительности машины на выбранной модели.
+
+Три числа меряются РАЗДЕЛЬНО — смешивать их бессмысленно:
+  * время загрузки модели  — разовая стоимость старта;
+  * tokens/sec             — скорость генерации, только после прогрева;
+  * пиковая RSS            — максимум за процесс, а не снимок в конце.
+"""
+
+import json
+import resource
+import statistics
+import sys
+import time
+from pathlib import Path
+
+from config import load_params  # ← ИСПРАВЛЕНО: убрал src.
+from model import generate, load_model, set_seed  # ← ИСПРАВЛЕНО: добавил set_seed
+
+
+def peak_rss_mb() -> float:
+    """Пиковая резидентная память процесса.
+
+    ru_maxrss на macOS в байтах, на Linux в килобайтах.
+    """
+    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    return peak / (1024 ** 2) if sys.platform == "darwin" else peak / 1024
+
+
+def main() -> None:
+    params = load_params()
+    
+    # ИСПРАВЛЕНО: фиксируем seed для воспроизводимости
+    set_seed(params["generate"]["seed"])
+    
+    prompt = params["bench"]["prompt"]
+    warmup_runs = params["bench"]["warmup_runs"]
+    measure_runs = params["bench"]["measure_runs"]
+
+    # ИСПРАВЛЕНО: разделили замеры - сначала только загрузка
+    print("Загрузка модели...")
+    t0 = time.perf_counter()
+    tokenizer, model = load_model(params)
+    load_time = time.perf_counter() - t0
+    print(f"Модель загружена за {load_time:.2f} сек")
+
+    # ИСПРАВЛЕНО: добавили прогрев перед измерением
+    print(f"Прогрев ({warmup_runs} прогон(ов))...")
+    for _ in range(warmup_runs):
+        generate(tokenizer, model, params, prompt)
+
+    # ИСПРАВЛЕНО: замеряем только генерацию, без загрузки
+    speeds = []
+    for _ in range(measure_runs):
+        t_gen = time.perf_counter()
+        _, n_tokens = generate(tokenizer, model, params, prompt)
+        elapsed = time.perf_counter() - t_gen
+        speeds.append(n_tokens / elapsed)
+
+    # Медиана устойчивее среднего к одиночному выбросу.
+    report = {
+        "model": params["model"]["name"],  # ← ИСПРАВЛЕНО: читаем из конфига
+        "device": str(model.device),
+        "dtype": params["model"]["dtype"],
+        "load_time_sec": round(load_time, 2),
+        "tokens_per_sec": round(statistics.median(speeds), 2),
+        "tokens_per_sec_all": [round(s, 2) for s in speeds],
+        "peak_rss_mb": round(peak_rss_mb(), 1),
+    }
+
+    Path("docs").mkdir(exist_ok=True)
+    Path("docs/bench.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()
