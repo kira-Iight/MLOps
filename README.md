@@ -28,9 +28,8 @@ make check        # самопроверка — должна стать зел�
 ![check](./screenshots/Результат_tests_check.png)
 
 ### Замеры производительности (bench.py)
-![bench](./screenshots/bench.png)
+![bench](./screenshots/Результат_bench.png)
 
 ### Отчет hardware.md
-![hardware](./screenshots/hardware.md)
 
 ---
