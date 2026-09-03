@@ -25,7 +25,7 @@ make check        # самопроверка — должна стать зел�
 ## Результаты выполнения дз1
 
 ### Проверка tests/check.sh
-![check.sh](screenshots/tests_check.png)
+![check.sh](screenshots/Результат tests:check.png)
 
 ### Замеры производительности (bench.py)
 ![bench.py](screenshots/bench.png)
