@@ -25,12 +25,12 @@ make check        # самопроверка — должна стать зел�
 ## Результаты выполнения дз1
 
 ### Проверка tests/check.sh
-![check.sh](./screenshots/Результат tests:check.png)
+![check](./screenshots/Результат_tests_check.png)
 
 ### Замеры производительности (bench.py)
-![bench.py](./screenshots/bench.png)
+![bench](./screenshots/bench.png)
 
 ### Отчет hardware.md
-![hardware.md](./screenshots/hardware.md)
+![hardware](./screenshots/hardware.md)
 
 ---
