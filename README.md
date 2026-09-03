@@ -22,8 +22,15 @@ make bench        # замеры
 make check        # самопроверка — должна стать зелёной
 ```
 
-## Подсказка по железу
+## Результаты выполнения дз1
 
-Модель выбирается **только** через `params.yaml`. Если ваша машина
-не тянет базовую — возьмите `HuggingFaceTB/SmolLM2-135M-Instruct`.
-Оценивается пайплайн, а не качество модели.
+### Проверка tests/check.sh
+![check.sh](screenshots/Результат tests:check.png)
+
+### Замеры производительности (bench.py)
+![bench.py](screenshots/Результат bench.png)
+
+### Отчет hardware.md
+![hardware.md](screenshots/hardware.md.png)
+
+---
