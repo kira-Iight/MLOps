@@ -13,8 +13,8 @@ import sys
 import time
 from pathlib import Path
 
-from config import load_params  # ← ИСПРАВЛЕНО: убрал src.
-from model import generate, load_model, set_seed  # ← ИСПРАВЛЕНО: добавил set_seed
+from config import load_params  
+from model import generate, load_model, set_seed  
 
 
 def peak_rss_mb() -> float:
@@ -29,26 +29,26 @@ def peak_rss_mb() -> float:
 def main() -> None:
     params = load_params()
     
-    # ИСПРАВЛЕНО: фиксируем seed для воспроизводимости
+    # фиксируем seed для воспроизводимости
     set_seed(params["generate"]["seed"])
     
     prompt = params["bench"]["prompt"]
     warmup_runs = params["bench"]["warmup_runs"]
     measure_runs = params["bench"]["measure_runs"]
 
-    # ИСПРАВЛЕНО: разделили замеры - сначала только загрузка
+    # разделили замеры - сначала только загрузка
     print("Загрузка модели...")
     t0 = time.perf_counter()
     tokenizer, model = load_model(params)
     load_time = time.perf_counter() - t0
     print(f"Модель загружена за {load_time:.2f} сек")
 
-    # ИСПРАВЛЕНО: добавили прогрев перед измерением
+    # добавили прогрев перед измерением
     print(f"Прогрев ({warmup_runs} прогон(ов))...")
     for _ in range(warmup_runs):
         generate(tokenizer, model, params, prompt)
 
-    # ИСПРАВЛЕНО: замеряем только генерацию, без загрузки
+    # замеряем только генерацию, без загрузки
     speeds = []
     for _ in range(measure_runs):
         t_gen = time.perf_counter()
@@ -58,7 +58,7 @@ def main() -> None:
 
     # Медиана устойчивее среднего к одиночному выбросу.
     report = {
-        "model": params["model"]["name"],  # ← ИСПРАВЛЕНО: читаем из конфига
+        "model": params["model"]["name"], 
         "device": str(model.device),
         "dtype": params["model"]["dtype"],
         "load_time_sec": round(load_time, 2),
