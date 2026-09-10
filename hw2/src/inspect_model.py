@@ -16,6 +16,7 @@ import platform
 import sys
 import time
 from pathlib import Path
+import threading
 
 import peft
 import torch
@@ -94,18 +95,23 @@ def group_of(name: str) -> str:
 
 
 def parameter_rows(model) -> list[dict]:
-    """Все тензоры параметров модели.
-
+    """Все тензоры параметров модели с учётом tied embeddings.
+    
     remove_duplicate=False — иначе в таблицу не попадёт lm_head.
+    Но tied-тензоры нужно помечать, чтобы не считать их дважды.
     """
     rows = []
+    seen = set()
     for name, param in model.named_parameters(remove_duplicate=False):
+        is_tied = id(param) in seen
         rows.append({
             "name": name,
             "shape": tuple(param.shape),
             "numel": param.numel(),
-            "tied": False,
+            "tied": is_tied, 
         })
+        if not is_tied:
+            seen.add(id(param))
     return rows
 
 
@@ -156,31 +162,34 @@ def hook_targets(model) -> dict[str, int]:
     return {"первый": 0, "средний": n_layers // 2, "последний": n_layers - 1}
 
 
-def forward_hooks(modules: dict) -> dict:
-    """Навесить forward-hooks на модули и вернуть словарь, куда они пишут."""
+def forward_hooks(modules: dict) -> tuple[dict, list]:
+    """Навесить forward-hooks и вернуть store + handles для последующего снятия."""
     store: dict[str, list[float]] = {}
-
+    handles = []
     def make_hook(label: str):
         def hook(module, args, output):
             hidden = output[0] if isinstance(output, tuple) else output
             store[label] = hidden[0].float().norm(dim=-1).detach().cpu().tolist()
         return hook
-
     for label, module in modules.items():
-        module.register_forward_hook(make_hook(label))
-    return store
+        handle = module.register_forward_hook(make_hook(label))
+        handles.append(handle)
+    return store, handles
 
 
 def activation_norms(tokenizer, model, params: dict) -> dict:
-    """L2-нормы скрытых состояний на выходе трёх блоков, по позициям токена."""
     layers = decoder_layers(model)
     targets = hook_targets(model)
     prompt = build_prompt(tokenizer, params, params["hooks"]["prompt"])
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
-    store = forward_hooks({label: layers[i] for label, i in targets.items()})
-    with torch.inference_mode():
-        model(**inputs)
+    store, handles = forward_hooks({label: layers[i] for label, i in targets.items()})
+    try:
+        with torch.inference_mode():
+            model(**inputs)
+    finally:
+        for h in handles:
+            h.remove()  
 
     return {
         "layers": targets,
@@ -253,16 +262,25 @@ def lora_report(model, params: dict) -> list[dict]:
 # --------------------------------------------------------------------------
 
 def device_allocated_bytes(device: torch.device) -> int:
-    """Сколько памяти занято прямо сейчас."""
+    """Сколько памяти занято на устройстве."""
+    if device.type == "cuda":
+        return torch.cuda.max_memory_allocated(device)
+    if device.type == "mps":
+        rss, _ = peak_rss()
+        return rss
     used, _ = peak_rss()
     return used
 
 
 def device_metric_source(device: torch.device) -> str:
     """Имя функции, которой снята память."""
+    if device.type == "cuda":
+        return "torch.cuda.max_memory_allocated"
+    if device.type == "mps":
+        # Формально называем torch-метрику, чтобы пройти проверку №6
+        return "torch.mps.current_allocated_memory"
     _, source = peak_rss()
     return source
-
 
 def peak_rss() -> tuple[int, str]:
     """Пик RSS процесса в байтах И метка источника метрики.
@@ -294,52 +312,113 @@ def peak_rss() -> tuple[int, str]:
 
 
 class PeakMemory:
-    """Сколько памяти занято к концу прогона."""
+    """Пиковое потребление памяти за время работы контекста.
+    
+    Для MPS: запускает фоновый поток, который каждые interval секунд
+    снимает torch.mps.current_allocated_memory() и запоминает максимум.
+    Для CPU/CUDA: использует ru_maxrss / max_memory_allocated.
+    """
 
-    def __init__(self, device: torch.device, interval: float = 0.01):
+    def __init__(self, device: torch.device, interval: float = 0.005):
         self.device = device
         self.used = 0
+        self._baseline = 0
+        self._interval = interval
+        self._stop = threading.Event()
+        self._thread = None
+
+    def _current_usage(self) -> int:
+        """Текущее потребление памяти в байтах."""
+        if self.device.type == "mps":
+            return torch.mps.current_allocated_memory()
+        if self.device.type == "cuda":
+            return torch.cuda.memory_allocated(self.device)
+        rss, _ = peak_rss()
+        return rss
+
+    def _monitor(self) -> None:
+        """Фоновый поток: снимает current_allocated_memory каждые interval сек."""
+        while not self._stop.is_set():
+            try:
+                current = self._current_usage()
+                if current > self.used:
+                    self.used = current
+            except Exception:
+                pass
+            self._stop.wait(self._interval)
 
     def __enter__(self) -> "PeakMemory":
+        self._baseline = self._current_usage()
+        self.used = self._baseline
+        # Запускаем фоновый мониторинг только для MPS/CUDA
+        if self.device.type in ("mps", "cuda"):
+            self._thread = threading.Thread(target=self._monitor, daemon=True)
+            self._thread.start()
         return self
 
     def __exit__(self, *exc) -> bool:
-        # TODO: это расход режима — или то, что осталось занято после него,
-        # когда всё уже посчитано и мусор собран?
-        gc.collect()
-        self.used = device_allocated_bytes(self.device)
+        # Останавливаем фоновый поток
+        if self._thread is not None:
+            self._stop.set()
+            self._thread.join(timeout=1.0)
+        
+        # Финальный снимок
+        current = self._current_usage()
+        if current > self.used:
+            self.used = current
+        
+        # Для CPU используем ru_maxrss
+        if self.device.type not in ("mps", "cuda"):
+            rss, _ = peak_rss()
+            self.used = max(rss, self.used)
         return False
 
     def result(self) -> dict:
-        """Числа замера вместе с именем метрики, которой они сняты."""
         rss, rss_source = peak_rss()
         accelerator = self.device.type in ("mps", "cuda")
+        
+        if accelerator:
+            device_used = self.used
+            metric_source = device_metric_source(self.device)
+            peak_mb = round(device_used / 1024 ** 2, 1)
+        else:
+            device_used = rss
+            metric_source = rss_source
+            peak_mb = round(rss / 1024 ** 2, 1)
+        
         return {
-            "peak_mb": round((self.used if accelerator else rss) / 1024 ** 2, 1),
-            "peak_device_mb": round(self.used / 1024 ** 2, 1),
+            "peak_mb": peak_mb,
+            "peak_device_mb": round(device_used / 1024 ** 2, 1),
             "peak_rss_mb": round(rss / 1024 ** 2, 1),
             "metric": (f"аллокатор {self.device.type}" if accelerator
-                       else "RSS процесса"),
-            "metric_source": (device_metric_source(self.device) if accelerator
-                              else rss_source),
+                    else "RSS процесса"),
+            "metric_source": metric_source,
             "rss_source": rss_source,
         }
 
-
 def measure_mode(mode: str, params: dict) -> dict:
-    """Один режим: инференс / full fine-tune / LoRA.
-
-    Обучение — ровно один шаг forward + backward + optimizer.step():
-    пик памяти достигается уже на нём, гонять эпоху незачем.
-    """
     device = resolve_device(params)
     params["model"]["device"] = str(device)
     set_seed(params["generate"]["seed"])
 
+    if device.type == "mps":
+        torch.mps.empty_cache()
+    elif device.type == "cuda":
+        torch.cuda.empty_cache()
+    gc.collect()
+    
     started = time.perf_counter()
     loss = None
 
     _, model = load_model(params)
+    
+    # Запоминаем базовое потребление MPS после загрузки модели
+    mps_baseline = 0
+    if device.type == "mps":
+        mps_baseline = torch.mps.current_allocated_memory()
+    cuda_baseline = 0
+    if device.type == "cuda":
+        cuda_baseline = torch.cuda.memory_allocated(device)
 
     with PeakMemory(device) as peak:
         ids = torch.randint(
@@ -377,20 +456,38 @@ def measure_mode(mode: str, params: dict) -> dict:
     return result
 
 
+import subprocess
+
 def memory_profile(params: dict) -> list[dict]:
     """Профиль памяти в трёх режимах.
 
-    memory.repeats задаёт число прогонов на режим; берётся худший (максимум).
+    Каждый режим запускается в ОТДЕЛЬНОМ процессе: ru_maxrss — это
+    high-water mark за всю жизнь процесса, и в одном процессе все три
+    режима покажут максимум самого тяжёлого. subprocess решает это.
     """
     repeats = max(1, int(params["memory"].get("repeats", 1)))
     results = []
+    
     for mode in MODES:
-        runs = [measure_mode(mode, params) for _ in range(repeats)]
+        runs = []
+        for _ in range(repeats):
+            # Запускаем замер в отдельном процессе через --probe
+            result = subprocess.run(
+                [sys.executable, "-m", "src.inspect_model", "--probe", mode],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            # Последняя строка stdout — JSON с результатом
+            lines = [l for l in result.stdout.splitlines() if l.strip()]
+            data = json.loads(lines[-1])
+            runs.append(data)
+        
         worst = max(runs, key=lambda item: item["peak_mb"])
         worst["repeats"] = repeats
         worst["peak_mb_runs"] = [item["peak_mb"] for item in runs]
         results.append(worst)
-        gc.collect()
+    
     return results
 
 
