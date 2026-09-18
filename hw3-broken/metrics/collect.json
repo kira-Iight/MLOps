@@ -1,0 +1,11 @@
+{
+  "version": "v2",
+  "sources": [
+    "Kessel/bbcnews",
+    "fancyzhx/ag_news"
+  ],
+  "rows_scanned": 121490,
+  "rows_written": 3000,
+  "system_prompt_variants": 5,
+  "seconds": 0.05
+}

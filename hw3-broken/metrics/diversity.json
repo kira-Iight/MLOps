@@ -1,0 +1,31 @@
+{
+  "version": "v2",
+  "examples": 2912,
+  "system_prompts": 5,
+  "groups": 8,
+  "largest_group": "sci/tech",
+  "largest_group_share": 0.2232,
+  "answer_len": {
+    "p10": 16,
+    "p50": 19,
+    "p90": 19,
+    "ratio_p90_p10": 1.19,
+    "cv": 0.124,
+    "min": 15,
+    "max": 24
+  },
+  "same_length_share": 0.5247,
+  "duplicate_answer_share": 0.9973,
+  "thresholds": {
+    "min_examples": 1000,
+    "min_system_prompts": 3,
+    "min_groups": 5,
+    "max_group_share": 0.3,
+    "min_answer_len_ratio": 1.05,
+    "max_same_length_share": 0.6,
+    "max_duplicate_answer_share": 0.999
+  },
+  "violations": [],
+  "passed": true,
+  "seconds": 0.12
+}
