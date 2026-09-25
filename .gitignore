@@ -6,3 +6,4 @@ out2.txt
 params.yaml.bak
 params.yaml.orig
 .DS_Store
+dvc_remote/
