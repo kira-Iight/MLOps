@@ -1,0 +1,66 @@
+# Единственная точка конфигурации ДЗ 5. В src/ нет ни имени модели,
+# ни learning rate, ни путей.
+model:
+  name: "Qwen/Qwen3-0.6B"
+  device: "auto"            # auto | cpu | cuda | mps
+  # Базовые веса в bfloat16: они заморожены, точность им не нужна, а память
+  # и время уходят вдвое. Сами матрицы LoRA peft держит в float32 — там идут
+  # крошечные обновления AdamW. На старом CPU без bf16 ставьте float32.
+  dtype: "bfloat16"
+  enable_thinking: false    # как в ДЗ 4: шаблон должен совпадать с обучением
+
+data:
+  # Выход стадии tokenize из ДЗ 4. У студента — свой путь.
+  train: "data/tokenized/train.pt"
+  val: "data/tokenized/val.pt"
+
+lora:
+  r: 8
+  alpha: 16                 # итоговый масштаб апдейта alpha / r = 2
+  dropout: 0.05
+  # Только проекции внимания и MLP. embed_tokens и lm_head — это 155 млн
+  # параметров каждый; в modules_to_save они уезжают в адаптер целиком.
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+
+train:
+  seed: 42
+  epochs: 1
+  batch_size: 1
+  grad_accum: 8             # эффективный батч = 8: память как у батча 2, шаг как у батча 8
+  max_seq_len: 256
+  lr: 2.0e-4
+  warmup_ratio: 0.03
+  weight_decay: 0.0
+  max_grad_norm: 1.0
+  eval_every: 10            # шагов оптимизатора между замерами val loss
+  # Логиты на весь словарь: 2 примера x 512 токенов x 151 936 x 4 байта = 0,6 ГБ.
+  # Батч 8 на оценке — уже 2,5 ГБ одних логитов, и ноутбук уходит в своп.
+  eval_batch_size: 1
+  gradient_checkpointing: true   # без него на ноутбуке с 16–32 ГБ не влезает
+  max_steps: null           # null — по эпохам; число — обрезать (smoke-тесты)
+
+# Эксперимент по слоям: второй прогон без адаптеров на первых N слоях.
+variants:
+  - name: "all_layers"
+    freeze_first: 0
+  - name: "freeze14"
+    freeze_first: 14
+
+compare:
+  max_new_tokens: 40
+  # Пять фиксированных промптов из своей задачи — классификация новостей
+  # BBC News + ag_news. Ответ — категория: business, entertainment,
+  # politics, sport, tech (для BBC) или world, sports, business, sci/tech (для ag_news).
+  prompts:
+    - "Текст новости:\nThe software giant Microsoft has reported a 12% rise in quarterly profits, beating analyst expectations, driven by strong demand for its cloud computing services.\n\nОпредели категорию этой новости."
+    - "Текст новости:\nThe national team secured a dramatic last-minute victory in the World Cup qualifier, with the captain scoring the winning goal in stoppage time.\n\nОпредели категорию этой новости."
+    - "Текст новости:\nParliament has approved a new bill on data protection after months of debate, with opposition parties demanding stricter rules for tech companies.\n\nОпредели категорию этой новости."
+    - "Текст новости:\nThe latest Hollywood blockbuster broke box office records during its opening weekend, earning over $200 million worldwide.\n\nОпредели категорию этой новости."
+    - "Текст новости:\nScientists at MIT have developed a new AI model that can predict protein structures with unprecedented accuracy, potentially accelerating drug discovery.\n\nОпредели категорию этой новости."
+  system: "Ты классифицируешь новости по темам. Прочитай текст и назови одну из категорий: business, entertainment, politics, sport, tech. Ответь одной строкой."
+
+paths:
+  models: "models"
+  metrics: "metrics"
+  curves: "docs/curves.png"
+  compare: "docs/compare.md"

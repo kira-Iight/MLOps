@@ -1,0 +1,18 @@
+{
+  "variant": "all_layers",
+  "adapter_dir": "models/adapter_all_layers",
+  "base": [
+    "business",
+    "business",
+    "business",
+    "business",
+    "business"
+  ],
+  "adapter": [
+    "Категория: business",
+    "Категория: sports",
+    "Категория: sci/tech",
+    "Категория: sci/tech",
+    "Категория: sci/tech"
+  ]
+}

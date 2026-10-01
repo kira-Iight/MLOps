@@ -1,0 +1,122 @@
+{
+  "variant": "freeze14",
+  "freeze_first": 14,
+  "model": "Qwen/Qwen3-0.6B",
+  "device": "mps",
+  "dtype": "bfloat16",
+  "seed": 42,
+  "lr": 0.0002,
+  "effective_batch": 8,
+  "steps": 20,
+  "trainable_params": 2523136,
+  "total_params": 598573056,
+  "trainable_share": 0.004215,
+  "base_val_loss": 3.5752214421080595,
+  "final_val_loss": 0.187,
+  "diverged": false,
+  "curve_train": [
+    [
+      1,
+      3.2548
+    ],
+    [
+      2,
+      2.8984
+    ],
+    [
+      3,
+      2.1227
+    ],
+    [
+      4,
+      1.6744
+    ],
+    [
+      5,
+      1.0228
+    ],
+    [
+      6,
+      1.2336
+    ],
+    [
+      7,
+      0.4983
+    ],
+    [
+      8,
+      0.8037
+    ],
+    [
+      9,
+      0.6769
+    ],
+    [
+      10,
+      0.5982
+    ],
+    [
+      11,
+      0.3053
+    ],
+    [
+      12,
+      0.1915
+    ],
+    [
+      13,
+      0.2906
+    ],
+    [
+      14,
+      0.4318
+    ],
+    [
+      15,
+      0.2036
+    ],
+    [
+      16,
+      0.1682
+    ],
+    [
+      17,
+      0.2229
+    ],
+    [
+      18,
+      0.0477
+    ],
+    [
+      19,
+      0.0777
+    ],
+    [
+      20,
+      0.1485
+    ]
+  ],
+  "curve_val": [
+    [
+      0,
+      3.5752
+    ],
+    [
+      10,
+      0.3632
+    ],
+    [
+      20,
+      0.187
+    ]
+  ],
+  "seconds": 145.6,
+  "eval_seconds": 180.7,
+  "seconds_per_step": 7.28,
+  "train_tokens_per_sec": 4589.7,
+  "peak_memory_mb": 3648.9,
+  "memory_metric": "torch.mps.driver_allocated_memory",
+  "adapter_dir": "models/adapter_freeze14",
+  "adapter_size_mb": 20.55,
+  "inputs_fingerprint": "73bc81ba6d6f"
+}
