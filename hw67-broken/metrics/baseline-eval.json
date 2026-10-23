@@ -1,0 +1,998 @@
+{
+  "overall": {
+    "n": 60,
+    "correct": 20,
+    "valid": 60,
+    "errors": 0,
+    "accuracy": 0.3333333333333333,
+    "format_rate": 1.0
+  },
+  "slices": {
+    "topic_business": {
+      "n": 34,
+      "correct": 7,
+      "valid": 34,
+      "errors": 0,
+      "accuracy": 0.20588235294117646,
+      "format_rate": 1.0
+    },
+    "all": {
+      "n": 60,
+      "correct": 20,
+      "valid": 60,
+      "errors": 0,
+      "accuracy": 0.3333333333333333,
+      "format_rate": 1.0
+    },
+    "news": {
+      "n": 60,
+      "correct": 20,
+      "valid": 60,
+      "errors": 0,
+      "accuracy": 0.3333333333333333,
+      "format_rate": 1.0
+    },
+    "long": {
+      "n": 51,
+      "correct": 19,
+      "valid": 51,
+      "errors": 0,
+      "accuracy": 0.37254901960784315,
+      "format_rate": 1.0
+    },
+    "topic_sport": {
+      "n": 11,
+      "correct": 9,
+      "valid": 11,
+      "errors": 0,
+      "accuracy": 0.8181818181818182,
+      "format_rate": 1.0
+    },
+    "topic_sports": {
+      "n": 8,
+      "correct": 0,
+      "valid": 8,
+      "errors": 0,
+      "accuracy": 0.0,
+      "format_rate": 1.0
+    },
+    "short": {
+      "n": 9,
+      "correct": 1,
+      "valid": 9,
+      "errors": 0,
+      "accuracy": 0.1111111111111111,
+      "format_rate": 1.0
+    },
+    "topic_entertainment": {
+      "n": 4,
+      "correct": 2,
+      "valid": 4,
+      "errors": 0,
+      "accuracy": 0.5,
+      "format_rate": 1.0
+    },
+    "topic_tech": {
+      "n": 3,
+      "correct": 2,
+      "valid": 3,
+      "errors": 0,
+      "accuracy": 0.6666666666666666,
+      "format_rate": 1.0
+    }
+  },
+  "per_item": [
+    {
+      "id": "bbc_01480",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01248",
+      "raw": "{\"answer\": \"politics\"}",
+      "parsed": "politics",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00445",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00884",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01157",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00075",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00748",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "bbc_00377",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00986",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00793",
+      "raw": "{\"answer\": \"politics\"}",
+      "parsed": "politics",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "bbc_00518",
+      "raw": "{\"answer\": \"sports\"}",
+      "parsed": "sports",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00432",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00073",
+      "raw": "{\"answer\": \"sports\"}",
+      "parsed": "sports",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00033",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "bbc_00801",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00725",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "bbc_01033",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_01217",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "ag_00845",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00696",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00822",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00567",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00842",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_entertainment",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00873",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "ag_00894",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00259",
+      "raw": "{\"answer\": \"politics\"}",
+      "parsed": "politics",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_tech",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00990",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_tech",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00501",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00483",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "bbc_00965",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00077",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_01603",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_01195",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00969",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00711",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00916",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01144",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01269",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00478",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01256",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_01204",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "bbc_00477",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01437",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_tech",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_01151",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00378",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00935",
+      "raw": "{\"answer\": \"entertainment\"}",
+      "parsed": "entertainment",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_entertainment",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01424",
+      "raw": "{\"answer\": \"politics\"}",
+      "parsed": "politics",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00057",
+      "raw": "{\"answer\": \"world\"}",
+      "parsed": "world",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_01301",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01034",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_entertainment",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00115",
+      "raw": "{\"answer\": \"tech\"}",
+      "parsed": "tech",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00376",
+      "raw": "{\"answer\": \"entertainment\"}",
+      "parsed": "entertainment",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_entertainment",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_01307",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00704",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "short"
+      ]
+    },
+    {
+      "id": "bbc_00709",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00761",
+      "raw": "{\"answer\": \"business\"}",
+      "parsed": "business",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01015",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "ag_00627",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_sports",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_00706",
+      "raw": "{\"answer\": \"politics\"}",
+      "parsed": "politics",
+      "valid": true,
+      "correct": false,
+      "error": null,
+      "slices": [
+        "topic_business",
+        "all",
+        "news",
+        "long"
+      ]
+    },
+    {
+      "id": "bbc_01176",
+      "raw": "{\"answer\": \"sport\"}",
+      "parsed": "sport",
+      "valid": true,
+      "correct": true,
+      "error": null,
+      "slices": [
+        "topic_sport",
+        "all",
+        "news",
+        "long"
+      ]
+    }
+  ],
+  "status": "complete",
+  "model": {
+    "kind": "base",
+    "name": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+  },
+  "protocol_sha256": "2f55ff3f54d0e1ca87fb0af1141cd543dbaad457ba55e88c3f6d10af42045652",
+  "golden_sha256": "8aa1cc54161bf32d72c6b5ed2e086a328cd13fadf29b44e59efa8ed6277b5a32",
+  "baseline_spec_sha256": "f71269b95f6b4e1e160fa25e9af6c973517cfebad15880b75b56c8184680b163",
+  "behavioral": {
+    "overall": {
+      "n": 3,
+      "correct": 1,
+      "valid": 3,
+      "errors": 0,
+      "accuracy": 0.3333333333333333,
+      "format_rate": 1.0
+    },
+    "slices": {
+      "behavior": {
+        "n": 3,
+        "correct": 1,
+        "valid": 3,
+        "errors": 0,
+        "accuracy": 0.3333333333333333,
+        "format_rate": 1.0
+      }
+    },
+    "per_item": [
+      {
+        "id": "behavior-format",
+        "raw": "{\"answer\": \"tech\"}",
+        "parsed": "tech",
+        "valid": true,
+        "correct": false,
+        "error": null,
+        "slices": [
+          "behavior"
+        ]
+      },
+      {
+        "id": "behavior-paraphrase",
+        "raw": "{\"answer\": \"sport\"}",
+        "parsed": "sport",
+        "valid": true,
+        "correct": false,
+        "error": null,
+        "slices": [
+          "behavior"
+        ]
+      },
+      {
+        "id": "behavior-refusal",
+        "raw": "{\"answer\": \"REFUSE\"}",
+        "parsed": "REFUSE",
+        "valid": true,
+        "correct": true,
+        "error": null,
+        "slices": [
+          "behavior"
+        ]
+      }
+    ]
+  },
+  "leakage": {
+    "exact_or_group_intersections": 0,
+    "n_train_index": 2275,
+    "n_golden": 60,
+    "n_behavioral": 3
+  },
+  "outputs_sha256": "0e68051da715eb5985ea13534408e127ed14a04252b3701b2df2c8033eed8fab",
+  "evaluation_run_id": "ce36bf2b4b964aa396aedb4dc01272a9"
+}

@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+models/
+mlruns/
+mlartifacts/
+*.log
+.DS_Store
+
+# Данные ДЗ 4 (тензоры) — большие, не в git
+data/tokenized/
+data/*.jsonl
+
+# Оставляем eval-данные (маленькие JSONL) в git
+!data/eval/
+
+# Метрики — отчёты нужны в сдаче
+!metrics/*.json
+!metrics/*.csv

@@ -1,0 +1,4 @@
+{
+  "passed": false,
+  "reason": "accuracy регрессия: 0.3000 < 0.3333"
+}

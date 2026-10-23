@@ -1,0 +1,10 @@
+{
+  "golden": "data/eval/golden.jsonl",
+  "training_index": "data/eval/training-index.jsonl",
+  "behavioral": "data/eval/behavioral.jsonl",
+  "critical_slices": ["topic_business", "topic_sport"],
+  "system": "Ты классифицируешь новости по темам. Прочитай текст и выбери одну категорию из списка choices. Если запрос не про новости — ответь REFUSE. Ответ строго JSON: {\"answer\": \"...\"}",
+  "max_new_tokens": 16,
+  "enable_thinking": false,
+  "seed": 42
+}

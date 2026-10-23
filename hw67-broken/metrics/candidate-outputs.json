@@ -1,0 +1,380 @@
+[
+  {
+    "id": "bbc_01480",
+    "raw": "{\"answer\": \"business\"}",
+    "error": null,
+    "latency_seconds": 1.0461803329963004
+  },
+  {
+    "id": "bbc_01248",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.9521125419996679
+  },
+  {
+    "id": "bbc_00445",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.8962194999912754
+  },
+  {
+    "id": "ag_00884",
+    "raw": "{\"answer\": \"business\"}",
+    "error": null,
+    "latency_seconds": 0.6311220829957165
+  },
+  {
+    "id": "bbc_01157",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.0418089159938972
+  },
+  {
+    "id": "bbc_00075",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.1265178329922492
+  },
+  {
+    "id": "ag_00748",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6260528749990044
+  },
+  {
+    "id": "bbc_00377",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.2303362499951618
+  },
+  {
+    "id": "bbc_00986",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.1476368750008987
+  },
+  {
+    "id": "ag_00793",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.599976459008758
+  },
+  {
+    "id": "bbc_00518",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.1909603329986567
+  },
+  {
+    "id": "bbc_00432",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.2210180000110995
+  },
+  {
+    "id": "bbc_00073",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.1292692499991972
+  },
+  {
+    "id": "ag_00033",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 0.6235975419986062
+  },
+  {
+    "id": "bbc_00801",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.1450575409980956
+  },
+  {
+    "id": "ag_00725",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 0.621035167001537
+  },
+  {
+    "id": "bbc_01033",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.242586583000957
+  },
+  {
+    "id": "ag_01217",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6256402919971151
+  },
+  {
+    "id": "ag_00845",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 0.6471894580026856
+  },
+  {
+    "id": "ag_00696",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.6627919589955127
+  },
+  {
+    "id": "ag_00822",
+    "raw": "{\"answer\": \"business\"}",
+    "error": null,
+    "latency_seconds": 0.663546875002794
+  },
+  {
+    "id": "bbc_00567",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 1.0264932499994757
+  },
+  {
+    "id": "bbc_00842",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.9810514170094393
+  },
+  {
+    "id": "ag_00873",
+    "raw": "{\"answer\": \"business\"}",
+    "error": null,
+    "latency_seconds": 0.5697698750009295
+  },
+  {
+    "id": "ag_00894",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.7035352079983568
+  },
+  {
+    "id": "bbc_00259",
+    "raw": "{\"answer\": \"politics\"}",
+    "error": null,
+    "latency_seconds": 1.2190697089972673
+  },
+  {
+    "id": "bbc_00990",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 1.205903666006634
+  },
+  {
+    "id": "bbc_00501",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.0948762080079177
+  },
+  {
+    "id": "ag_00483",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6123981249984354
+  },
+  {
+    "id": "bbc_00965",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.8648067500034813
+  },
+  {
+    "id": "bbc_00077",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 0.9801359160046559
+  },
+  {
+    "id": "ag_01603",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.658505375002278
+  },
+  {
+    "id": "ag_01195",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.6553908750065602
+  },
+  {
+    "id": "ag_00969",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 0.802346625001519
+  },
+  {
+    "id": "bbc_00711",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.162225332998787
+  },
+  {
+    "id": "ag_00916",
+    "raw": "{\"answer\": \"business\"}",
+    "error": null,
+    "latency_seconds": 0.6426966249855468
+  },
+  {
+    "id": "bbc_01144",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.1366714580071857
+  },
+  {
+    "id": "bbc_01269",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 1.2426547089999076
+  },
+  {
+    "id": "bbc_00478",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.1339759999973467
+  },
+  {
+    "id": "bbc_01256",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.2453501669951947
+  },
+  {
+    "id": "ag_01204",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6459757080010604
+  },
+  {
+    "id": "bbc_00477",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 1.158766332999221
+  },
+  {
+    "id": "bbc_01437",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 1.1851229169988073
+  },
+  {
+    "id": "ag_01151",
+    "raw": "{\"answer\": \"tech\"}",
+    "error": null,
+    "latency_seconds": 0.6469480830128305
+  },
+  {
+    "id": "bbc_00378",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.1346255000098608
+  },
+  {
+    "id": "bbc_00935",
+    "raw": "{\"answer\": \"entertainment\"}",
+    "error": null,
+    "latency_seconds": 1.1631520419905428
+  },
+  {
+    "id": "bbc_01424",
+    "raw": "{\"answer\": \"politics\"}",
+    "error": null,
+    "latency_seconds": 1.1878987090021838
+  },
+  {
+    "id": "bbc_00057",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.30879658300546
+  },
+  {
+    "id": "ag_01301",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.7350798749976093
+  },
+  {
+    "id": "bbc_01034",
+    "raw": "{\"answer\": \"entertainment\"}",
+    "error": null,
+    "latency_seconds": 1.2504721250006696
+  },
+  {
+    "id": "bbc_00115",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 1.1240090419887565
+  },
+  {
+    "id": "bbc_00376",
+    "raw": "{\"answer\": \"entertainment\"}",
+    "error": null,
+    "latency_seconds": 1.2889411249925615
+  },
+  {
+    "id": "ag_01307",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6312280419952003
+  },
+  {
+    "id": "ag_00704",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6240122500021243
+  },
+  {
+    "id": "bbc_00709",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.1436965829925612
+  },
+  {
+    "id": "bbc_00761",
+    "raw": "{\"answer\": \"world\"}",
+    "error": null,
+    "latency_seconds": 0.9043081249983516
+  },
+  {
+    "id": "bbc_01015",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.1553726659913082
+  },
+  {
+    "id": "ag_00627",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6458214169979328
+  },
+  {
+    "id": "bbc_00706",
+    "raw": "{\"answer\": \"politics\"}",
+    "error": null,
+    "latency_seconds": 1.156193709000945
+  },
+  {
+    "id": "bbc_01176",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 1.2055172919936012
+  },
+  {
+    "id": "behavior-format",
+    "raw": "```json\n{\"answer\": \"tech\"}\n```",
+    "error": null,
+    "latency_seconds": 0.7878114170016488
+  },
+  {
+    "id": "behavior-paraphrase",
+    "raw": "{\"answer\": \"sports\"}",
+    "error": null,
+    "latency_seconds": 0.6005488329974469
+  },
+  {
+    "id": "behavior-refusal",
+    "raw": "{\"answer\": \"REFUSE\"}",
+    "error": null,
+    "latency_seconds": 0.598183957990841
+  }
+]
