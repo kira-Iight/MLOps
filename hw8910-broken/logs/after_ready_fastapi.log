@@ -1,0 +1,10 @@
+# ПОСЛЕ: прогрев в threading.Thread, accept с первой секунды.
+# $ python3 service_fastapi.py --workspace .lab-fastapi --port 8092 --warmup-seconds 20
+
+ready: 503
+{"ready": false}
+{"loaded_id": "fixture-A", "calls": 0, "warmup_finished": false}
+
+# ...ждём прогрева...
+ready: 200
+{"ready": true}

@@ -1,0 +1,108 @@
+ОТЧЁТ ДЗ 8+9+10
+
+1. РЕПОЗИТОРИЙ И ОКРУЖЕНИЕ
+   Исходный коммит: d26db97
+   Исправленный: 2394f21 (7 дефектов) + 861ace0 (FastAPI + flow)
+   Устройство: Apple Silicon (M-series), macOS 15.7, Python 3.13.5
+   Зависимости: prefect 3.9.0, fastapi 0.150.0, uvicorn 0.54.0,
+                transformers 5.17.0, torch 2.14.0, huggingface_hub 2.4.0
+   Команды: см. README.txt
+   defects.csv — 10 записей (7 исходных + 3 flow/FastAPI).
+
+2. МИНИМУМ 6 ИНТЕГРАЦИОННЫХ ТЕСТОВ
+   tests/test_integration.py: 12 тестов (3+ HTTP, 2+ subprocess, 4 flow)
+   tests/test_http_contract.py: 3 теста (оба фреймворка, адаптер запуска)
+   tests/test_release.py: 13 (приложены, не ослаблены)
+   Всего: 28/28 PASS на исправленной. На исходной: 7 FAILED в
+   test_integration (без flow-тестов, flow не существовал).
+   Логи: logs/before_integration.log, logs/after_integration.log,
+         logs/before_http.log, logs/after_http.log
+
+3. ПЕРЕИСПОЛЬЗОВАНО ИЗ 6+7
+   Training run: my-qwen-adapter/1, alias candidate (gate ОТКАЗАЛ по accuracy)
+   Baseline: Qwen/Qwen3-0.6B@c1899de289a04d12100db370d81485cdf75e47ca
+   (реальная HF-ревизия, закреплена в .lab-real/accepted.json)
+   Поскольку candidate не прошёл gate, сервис обслуживает baseline.
+   evaluation_run_id: baseline-hw67-v1
+   Полный sweep не повторялся.
+
+4. ГРАФ ЗАДАЧ (flow.py)
+   prepare_inputs (кеш) → fetch_artifact → evaluate_gate → publish_release
+   Ключ кеша: SHA-256 канонического {data_sha256, config}, config включает
+   tokenizer_revision, template_sha256, max_length, code_revision.
+   Повтор запрещён: после записи release_id в журнал — только идемпотентный
+   возврат. Кеш подготовки переиспользуется безопасно, публикация — нет.
+
+5. УСПЕШНЫЙ ПРОХОД / СБОЙ / ВОССТАНОВЛЕНИЕ / ИЗМЕНЕНИЕ ВХОДА
+   Успешный: python3 flow.py → published, release_id=f0c3ea33
+   Сбой: python3 flow.py --fail-after-prepare → RuntimeError,
+         журнал не изменён
+   Восстановление: повтор → Cached(type=COMPLETED), published/repeat
+   Изменение input.txt: PREPARED с новым input_sha256 (bf6540fc...)
+   Изменение config (max_length=256): PREPARED (release.cache_key меняет ключ)
+   Логи: stderr Prefect, см. tests/test_integration.py
+
+6. GATE И ОТРИЦАТЕЛЬНЫЕ ПРОВЕРКИ
+   make eval → отказ: accuracy 0.30 < 0.3333 (candidate vs baseline)
+   Неполный отчёт: ValueError, accepted.json SHA-256 не изменился
+   Чужой model_id: ValueError
+   NaN в метриках: ValueError
+   Ошибка os.replace: OSError, accepted.json побайтно сохранён
+   Повтор публикации: одна запись в publications.jsonl
+   PASS из фикстуры для реального выпуска не принимается: quality_gate
+   ДЗ 6+7 работает на реальных ответах baseline/candidate.
+
+7. БЫСТРЫЕ ТЕСТЫ
+   python3 -m unittest discover -s tests → 28/28 OK
+   Намеренное падение: logs/before_integration.log (7 FAILED на исходной)
+   CI: локальный (Actions не настроен — не заявляю защиту merge)
+   Триггеры:
+     - Новый код → быстрые тесты; при изменении поведения генерации — re-eval
+     - Новые данные → проверка схемы, инвалидация cache (input_sha256)
+     - Новый адаптер → полная re-eval + gate перед accepted
+
+8. API
+   GET /health → alive
+   GET /ready → 503 до прогрева, 200 после (test_http_contract.py)
+   GET /debug → loaded_id, calls, warmup_finished
+   POST /generate → 200 с answer, output_tokens, model_id, runtime_sha256,
+                     request_id, generation_seconds
+   Невалидный запрос (пустой prompt, max_new_tokens=0/100000/строка)
+   → 400 до backend, calls не растёт.
+   Реальный ответ: metrics/real-smoke.json
+     answer="business", output_tokens=2, model_id=Qwen/Qwen3-0.6B@c1899...,
+     generation_seconds=1.04 (MPS, baseline без адаптера)
+
+9. ЗАМЕР НАГРУЗКИ (STUB)
+   docs/load-table.csv, metrics/load-raw.jsonl
+   concurrency=1: n=4, ok=4, errors=0, total=0.054s, 74.2 req/s,
+                  mean=13.5ms, max=14.7ms
+   concurrency=2: n=4, ok=4, errors=0, total=0.054s, 73.5 req/s,
+                  mean=23.4ms, max=27.1ms
+   При concurrency=2 пропускная не растёт (73.5 vs 74.2): stub-backend
+   под GIL с time.sleep(0.01) не масштабируется. На 4 запросах статистики
+   мало — p95 не выводим. Последовательный Transformers-сервис не
+   доказывает скорость SGLang/vLLM: там prefill/decode оптимизированы,
+   KV-cache переиспользуется между батчами, есть continuous batching.
+
+10. STUB-ОПЫТ A → B → A
+    Сервис A (fixture-A) → публикация B в другом процессе → сервис отвечает
+    A до перезапуска (loaded_id из памяти) → перезапуск → сервис видит B
+    → откат A → перезапуск → сервис видит A.
+    Это test_loaded_version_not_changed_by_publish.
+    Повтор после сбоя между журналом и accepted: журнал первым → повтор
+    видит release_id → восстанавливает accepted без дубликата.
+    Реальный smoke отдельно: metrics/real-smoke.json.
+
+11. ОГРАНИЧЕНИЯ
+    - Маленькая выборка (4 запроса на конфигурацию) — p95 не выводим
+    - Baseline float32 на MPS; адаптер (candidate) отклонён gate и не
+      обслуживается
+    - Prefill/decode не разделяли; TTFT и ITL не измеряли
+    - CI только локальный; GitHub Actions не настроен
+    - Stub-backend под GIL — concurrency=2 не даёт прироста. Для реального
+      замера пропускной способности нужна модель и больше запросов
+    - Модель Qwen3-0.6B — не SOTA, задача классификации новостей решается
+      правильно только для очевидных примеров
+
+ВИДЕО: 

@@ -1,0 +1,8 @@
+test_generate_and_invalid_requests_on_both (tests.test_http_contract.HttpContractForBothFrameworks.test_generate_and_invalid_requests_on_both) ... ok
+test_health_works_on_both (tests.test_http_contract.HttpContractForBothFrameworks.test_health_works_on_both) ... ok
+test_ready_503_before_warmup_on_both (tests.test_http_contract.HttpContractForBothFrameworks.test_ready_503_before_warmup_on_both) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 11.722s
+
+OK

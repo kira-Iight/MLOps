@@ -1,0 +1,12 @@
+# ДО: service_fastapi.py не существовал, HTTP-контракт проверялся только для stdlib.
+# test_http_contract.py упал бы с ImportError (нет модуля service_fastapi).
+
+$ python3 -m unittest tests.test_http_contract -v
+ERROR: test_health_works_on_both
+  ModuleNotFoundError: No module named 'service_fastapi'
+ERROR: test_ready_503_before_warmup_on_both
+  ModuleNotFoundError: No module named 'service_fastapi'
+ERROR: test_generate_and_invalid_requests_on_both
+  ModuleNotFoundError: No module named 'service_fastapi'
+
+Ran 3 tests — FAILED (errors=3)

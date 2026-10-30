@@ -1,0 +1,8 @@
+{"ok": true, "request_id": "bfb2935a-3fa5-4401-9aa5-d91e847654d3", "model_id": "fixture-A", "client_latency": 0.0147, "generation_seconds": 0.01258187499934138, "output_tokens": 1, "error": null, "concurrency": 1}
+{"ok": true, "request_id": "e7020a22-26d0-4a1c-9966-879763e5b75e", "model_id": "fixture-A", "client_latency": 0.0137, "generation_seconds": 0.012596208000104525, "output_tokens": 1, "error": null, "concurrency": 1}
+{"ok": true, "request_id": "41499ec5-70a7-4e01-af1f-e44b0bb7ff4a", "model_id": "fixture-A", "client_latency": 0.0118, "generation_seconds": 0.01077295800041611, "output_tokens": 1, "error": null, "concurrency": 1}
+{"ok": true, "request_id": "47ba3276-2f06-47df-8ab6-c44352bcd3e4", "model_id": "fixture-A", "client_latency": 0.0137, "generation_seconds": 0.012574209000376868, "output_tokens": 1, "error": null, "concurrency": 1}
+{"ok": true, "request_id": "2c680560-6fd9-4827-92fa-74f78e367e8a", "model_id": "fixture-A", "client_latency": 0.0271, "generation_seconds": 0.012573125000017171, "output_tokens": 1, "error": null, "concurrency": 2}
+{"ok": true, "request_id": "a7c815dc-1daf-4234-a847-587ad36af8d8", "model_id": "fixture-A", "client_latency": 0.014, "generation_seconds": 0.012614499999472173, "output_tokens": 1, "error": null, "concurrency": 2}
+{"ok": true, "request_id": "824d3a24-f38c-406f-937d-0533599814d6", "model_id": "fixture-A", "client_latency": 0.026, "generation_seconds": 0.012547040999379533, "output_tokens": 1, "error": null, "concurrency": 2}
+{"ok": true, "request_id": "10f62992-4bd2-407c-b51f-6c5d460e2bb5", "model_id": "fixture-A", "client_latency": 0.0267, "generation_seconds": 0.012573166999573004, "output_tokens": 1, "error": null, "concurrency": 2}

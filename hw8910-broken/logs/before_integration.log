@@ -1,0 +1,110 @@
+test_cache_invalidated_by_input_bytes (tests.test_integration.IntegrationTests.test_cache_invalidated_by_input_bytes)
+Дефект 1: изменение input.txt по тому же пути меняет кеш. ... FAIL
+test_failure_after_prepare_uses_cache_on_retry (tests.test_integration.IntegrationTests.test_failure_after_prepare_uses_cache_on_retry)
+Восстановление: падение после подготовки → повтор берёт кеш. ... ok
+test_incomplete_report_rejected_unchanged_accepted (tests.test_integration.IntegrationTests.test_incomplete_report_rejected_unchanged_accepted)
+Дефект 2: неполный отчёт не меняет accepted.json. ... FAIL
+test_invalid_requests_4xx_without_backend_call (tests.test_integration.IntegrationTests.test_invalid_requests_4xx_without_backend_call)
+Дефект 7: невалидные запросы — 4xx, calls не растёт. ... FAIL
+test_loaded_version_not_changed_by_publish (tests.test_integration.IntegrationTests.test_loaded_version_not_changed_by_publish)
+Дефект 6: публикация B в другом процессе не меняет model_id ... FAIL
+test_publish_atomic_on_replace_error (tests.test_integration.IntegrationTests.test_publish_atomic_on_replace_error)
+Дефект 3: ошибка os.replace → accepted.json побайтно неизменён. ... FAIL
+test_ready_503_before_warmup (tests.test_integration.IntegrationTests.test_ready_503_before_warmup)
+Дефект 5: /ready отдаёт 503 до завершения прогрева, 200 после. ... FAIL
+test_repeat_publication_idempotent (tests.test_integration.IntegrationTests.test_repeat_publication_idempotent)
+Дефект 4: два одинаковых выпуска → одна запись в журнале. ... FAIL
+
+======================================================================
+FAIL: test_cache_invalidated_by_input_bytes (tests.test_integration.IntegrationTests.test_cache_invalidated_by_input_bytes)
+Дефект 1: изменение input.txt по тому же пути меняет кеш.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nayeon/Downloads/hw1-broken/hw8910-broken/tests/test_integration.py", line 214, in test_cache_invalidated_by_input_bytes
+    self.assertIn('PREPARED', out3,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                  f'после изменения input.txt должен быть PREPARED, а не CACHE_HIT:\n{out3}')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PREPARED' not found in 'CACHE_HIT 88bbd559a04a7a432693a1c611ef2704bb711ac17dd5e22203ee9e5020f59fd4\nPUBLISHED fixture-B\n' : после изменения input.txt должен быть PREPARED, а не CACHE_HIT:
+CACHE_HIT 88bbd559a04a7a432693a1c611ef2704bb711ac17dd5e22203ee9e5020f59fd4
+PUBLISHED fixture-B
+
+
+======================================================================
+FAIL: test_incomplete_report_rejected_unchanged_accepted (tests.test_integration.IntegrationTests.test_incomplete_report_rejected_unchanged_accepted)
+Дефект 2: неполный отчёт не меняет accepted.json.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nayeon/Downloads/hw1-broken/hw8910-broken/tests/test_integration.py", line 234, in test_incomplete_report_rejected_unchanged_accepted
+    self.assertNotEqual(rc, 0, f'run на неполном отчёте должен упасть:\n{out}')
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : run на неполном отчёте должен упасть:
+PREPARED 88bbd559a04a7a432693a1c611ef2704bb711ac17dd5e22203ee9e5020f59fd4
+PUBLISHED fixture-B
+
+
+======================================================================
+FAIL: test_invalid_requests_4xx_without_backend_call (tests.test_integration.IntegrationTests.test_invalid_requests_4xx_without_backend_call)
+Дефект 7: невалидные запросы — 4xx, calls не растёт.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nayeon/Downloads/hw1-broken/hw8910-broken/tests/test_integration.py", line 147, in test_invalid_requests_4xx_without_backend_call
+    self.assertIn(code, (400, 422),
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                  f'для {body} ждали 4xx, получили {code}')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 not found in (400, 422) : для {'prompt': '', 'max_new_tokens': 5} ждали 4xx, получили 200
+
+======================================================================
+FAIL: test_loaded_version_not_changed_by_publish (tests.test_integration.IntegrationTests.test_loaded_version_not_changed_by_publish)
+Дефект 6: публикация B в другом процессе не меняет model_id
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nayeon/Downloads/hw1-broken/hw8910-broken/tests/test_integration.py", line 183, in test_loaded_version_not_changed_by_publish
+    self.assertEqual(body['model_id'], 'fixture-A',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'без перезапуска сервис должен остаться на A')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'fixture-B' != 'fixture-A'
+- fixture-B
+?         ^
++ fixture-A
+?         ^
+ : без перезапуска сервис должен остаться на A
+
+======================================================================
+FAIL: test_publish_atomic_on_replace_error (tests.test_integration.IntegrationTests.test_publish_atomic_on_replace_error)
+Дефект 3: ошибка os.replace → accepted.json побайтно неизменён.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nayeon/Downloads/hw1-broken/hw8910-broken/tests/test_integration.py", line 273, in test_publish_atomic_on_replace_error
+    with self.assertRaises(OSError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: OSError not raised
+
+======================================================================
+FAIL: test_ready_503_before_warmup (tests.test_integration.IntegrationTests.test_ready_503_before_warmup)
+Дефект 5: /ready отдаёт 503 до завершения прогрева, 200 после.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nayeon/Downloads/hw1-broken/hw8910-broken/tests/test_integration.py", line 122, in test_ready_503_before_warmup
+    self.assertEqual(code, 503, f'до прогрева ждали 503, получили {code}: {body}')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503 : до прогрева ждали 503, получили 200: {'ready': True}
+
+======================================================================
+FAIL: test_repeat_publication_idempotent (tests.test_integration.IntegrationTests.test_repeat_publication_idempotent)
+Дефект 4: два одинаковых выпуска → одна запись в журнале.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nayeon/Downloads/hw1-broken/hw8910-broken/tests/test_integration.py", line 225, in test_repeat_publication_idempotent
+    self.assertEqual(len(pub), 1,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+                     f'ждали 1 запись после двух запусков, получили {len(pub)}')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1 : ждали 1 запись после двух запусков, получили 2
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.941s
+
+FAILED (failures=7)

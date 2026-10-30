@@ -1,0 +1,5 @@
+# ДО: FastAPI через asynccontextmanager lifespan блокировал accept до прогрева.
+# curl /ready через 0.3 сек при warmup=3 вернул 200 — по контракту должно быть 503.
+# Причина: uvicorn не принимает соединения, пока startup() не завершится.
+
+t=+0.30s  /ready -> 200 {'ready': True}
